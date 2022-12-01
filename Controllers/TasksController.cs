@@ -12,12 +12,12 @@ namespace Project_Management_System.Controllers
 {
     public class TasksController : Controller
     {
-        private ProjectsDbEntities1 db = new ProjectsDbEntities1();
+        private ProjectsDbEntities2 db = new ProjectsDbEntities2();
 
         // GET: Tasks
         public ActionResult Index()
         {
-            var tasks = db.Tasks.Include(t => t.Project);
+            var tasks = db.Tasks.Include(t => t.Project).Include(t => t.User);
             return View(tasks.ToList());
         }
 
@@ -28,13 +28,12 @@ namespace Project_Management_System.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            // Task task = db.Tasks.Find(id);
-            var task = db.Tasks.Where(x => x.project_id == id);
+            Task task = db.Tasks.Find(id);
             if (task == null)
             {
                 return HttpNotFound();
             }
-            return View(task.ToList());
+            return View(task);
         }
         public ActionResult DetailsbyProject(int? id)
         {
@@ -43,7 +42,7 @@ namespace Project_Management_System.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var task = db.Tasks.Where(x => x.project_id == id);
-            
+
             if (task == null)
             {
                 return HttpNotFound();
@@ -55,6 +54,7 @@ namespace Project_Management_System.Controllers
         public ActionResult Create()
         {
             ViewBag.project_id = new SelectList(db.Projects, "id", "project_name");
+            ViewBag.user_id = new SelectList(db.Users, "User_id", "Name");
             return View();
         }
 
@@ -63,7 +63,7 @@ namespace Project_Management_System.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,title,description,status,createdAt,dueDate,project_id")] Task task)
+        public ActionResult Create([Bind(Include = "id,title,description,status,createdAt,dueDate,project_id,user_id")] Task task)
         {
             if (ModelState.IsValid)
             {
@@ -73,6 +73,7 @@ namespace Project_Management_System.Controllers
             }
 
             ViewBag.project_id = new SelectList(db.Projects, "id", "project_name", task.project_id);
+            ViewBag.user_id = new SelectList(db.Users, "User_id", "Name", task.user_id);
             return View(task);
         }
 
@@ -89,6 +90,7 @@ namespace Project_Management_System.Controllers
                 return HttpNotFound();
             }
             ViewBag.project_id = new SelectList(db.Projects, "id", "project_name", task.project_id);
+            ViewBag.user_id = new SelectList(db.Users, "User_id", "Name", task.user_id);
             return View(task);
         }
 
@@ -97,7 +99,7 @@ namespace Project_Management_System.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,title,description,status,createdAt,dueDate,project_id")] Task task)
+        public ActionResult Edit([Bind(Include = "id,title,description,status,createdAt,dueDate,project_id,user_id")] Task task)
         {
             if (ModelState.IsValid)
             {
@@ -106,6 +108,7 @@ namespace Project_Management_System.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.project_id = new SelectList(db.Projects, "id", "project_name", task.project_id);
+            ViewBag.user_id = new SelectList(db.Users, "User_id", "Name", task.user_id);
             return View(task);
         }
 

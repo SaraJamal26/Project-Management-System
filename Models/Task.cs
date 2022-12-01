@@ -21,7 +21,9 @@ namespace Project_Management_System.Models
         public System.DateTime createdAt { get; set; }
         public Nullable<System.DateTime> dueDate { get; set; }
         public int project_id { get; set; }
+        public Nullable<int> user_id { get; set; }
     
         public virtual Project Project { get; set; }
+        public virtual User User { get; set; }
     }
 }

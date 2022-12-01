@@ -135,29 +135,32 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Manager.cs">
+      <DependentUpon>PMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PMSModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PMSModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PMSModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PMSModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PMSModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PMSModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\Project.cs">
-      <DependentUpon>ProjectsModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ProjectsModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ProjectsModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ProjectsModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ProjectsModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ProjectsModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ProjectsModel.edmx</DependentUpon>
+      <DependentUpon>PMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Task.cs">
-      <DependentUpon>ProjectsModel.tt</DependentUpon>
+      <DependentUpon>PMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\User.cs">
-      <DependentUpon>ProjectsModel.tt</DependentUpon>
+      <DependentUpon>PMSModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -170,24 +173,24 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Models\ProjectsModel.Context.tt">
+    <Content Include="Models\PMSModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ProjectsModel.edmx</DependentUpon>
-      <LastGenOutput>ProjectsModel.Context.cs</LastGenOutput>
+      <DependentUpon>PMSModel.edmx</DependentUpon>
+      <LastGenOutput>PMSModel.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\ProjectsModel.tt">
+    <Content Include="Models\PMSModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ProjectsModel.edmx</DependentUpon>
-      <LastGenOutput>ProjectsModel.cs</LastGenOutput>
+      <DependentUpon>PMSModel.edmx</DependentUpon>
+      <LastGenOutput>PMSModel.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <EntityDeploy Include="Models\ProjectsModel.edmx">
+    <EntityDeploy Include="Models\PMSModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ProjectsModel.Designer.cs</LastGenOutput>
+      <LastGenOutput>PMSModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\ProjectsModel.edmx.diagram">
-      <DependentUpon>ProjectsModel.edmx</DependentUpon>
+    <Content Include="Models\PMSModel.edmx.diagram">
+      <DependentUpon>PMSModel.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />

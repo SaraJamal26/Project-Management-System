@@ -59,6 +59,14 @@
             @Html.DisplayFor(model => model.Project.project_name)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.User.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.Name)
+        </dd>
+
     </dl>
 
     @using (Html.BeginForm()) {

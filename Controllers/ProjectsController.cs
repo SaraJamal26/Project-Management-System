@@ -12,7 +12,7 @@ namespace Project_Management_System.Controllers
 {
     public class ProjectsController : Controller
     {
-        private ProjectsDbEntities1 db = new ProjectsDbEntities1();
+        private ProjectsDbEntities2 db = new ProjectsDbEntities2();
 
         // GET: Projects
         public ActionResult Index()
@@ -46,7 +46,7 @@ namespace Project_Management_System.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,project_name,start_date,end_date")] Project project)
+        public ActionResult Create([Bind(Include = "id,project_name,start_date,end_date,manager_id")] Project project)
         {
             if (ModelState.IsValid)
             {
@@ -78,7 +78,7 @@ namespace Project_Management_System.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,project_name,start_date,end_date")] Project project)
+        public ActionResult Edit([Bind(Include = "id,project_name,start_date,end_date,manager_id")] Project project)
         {
             if (ModelState.IsValid)
             {

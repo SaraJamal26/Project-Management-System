@@ -12,22 +12,23 @@ namespace Project_Management_System.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class User
+    public partial class Manager
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public User()
+        public Manager()
         {
-            this.Tasks = new HashSet<Task>();
+            this.Projects = new HashSet<Project>();
+            this.Users = new HashSet<User>();
         }
     
-        public int User_id { get; set; }
+        public int id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public Nullable<int> Manager_id { get; set; }
     
-        public virtual Manager Manager { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Task> Tasks { get; set; }
+        public virtual ICollection<Project> Projects { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<User> Users { get; set; }
     }
 }

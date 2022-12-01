@@ -24,7 +24,9 @@ namespace Project_Management_System.Models
         public string project_name { get; set; }
         public System.DateTime start_date { get; set; }
         public System.DateTime end_date { get; set; }
+        public Nullable<int> manager_id { get; set; }
     
+        public virtual Manager Manager { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Task> Tasks { get; set; }
     }

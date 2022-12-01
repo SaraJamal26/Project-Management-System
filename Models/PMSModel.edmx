@@ -5,6 +5,15 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
       <Schema Namespace="ProjectsDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Managers">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="100" Nullable="false" />
+          <Property Name="Email" Type="nchar" MaxLength="100" Nullable="false" />
+          <Property Name="Password" Type="nchar" MaxLength="15" Nullable="false" />
+        </EntityType>
         <EntityType Name="Projects">
           <Key>
             <PropertyRef Name="id" />
@@ -13,6 +22,7 @@
           <Property Name="project_name" Type="nchar" MaxLength="100" Nullable="false" />
           <Property Name="start_date" Type="date" Nullable="false" />
           <Property Name="end_date" Type="date" Nullable="false" />
+          <Property Name="manager_id" Type="int" />
         </EntityType>
         <EntityType Name="Task">
           <Key>
@@ -25,6 +35,7 @@
           <Property Name="createdAt" Type="date" Nullable="false" />
           <Property Name="dueDate" Type="date" />
           <Property Name="project_id" Type="int" Nullable="false" />
+          <Property Name="user_id" Type="int" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
@@ -34,8 +45,20 @@
           <Property Name="Name" Type="nchar" MaxLength="100" Nullable="false" />
           <Property Name="Email" Type="nchar" MaxLength="100" Nullable="false" />
           <Property Name="Password" Type="nchar" MaxLength="15" Nullable="false" />
-          <Property Name="Role" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="Manager_id" Type="int" />
         </EntityType>
+        <Association Name="FK_Projects_Managers">
+          <End Role="Managers" Type="Self.Managers" Multiplicity="0..1" />
+          <End Role="Projects" Type="Self.Projects" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Managers">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Projects">
+              <PropertyRef Name="manager_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Task_Projects1">
           <End Role="Projects" Type="Self.Projects" Multiplicity="1" />
           <End Role="Task" Type="Self.Task" Multiplicity="*" />
@@ -48,13 +71,50 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Task_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Task" Type="Self.Task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="User_id" />
+            </Principal>
+            <Dependent Role="Task">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Managers">
+          <End Role="Managers" Type="Self.Managers" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Managers">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="Manager_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="ProjectsDbModelStoreContainer">
+          <EntitySet Name="Managers" EntityType="Self.Managers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Projects" EntityType="Self.Projects" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Task" EntityType="Self.Task" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Projects_Managers" Association="Self.FK_Projects_Managers">
+            <End Role="Managers" EntitySet="Managers" />
+            <End Role="Projects" EntitySet="Projects" />
+          </AssociationSet>
           <AssociationSet Name="FK_Task_Projects1" Association="Self.FK_Task_Projects1">
             <End Role="Projects" EntitySet="Projects" />
             <End Role="Task" EntitySet="Task" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Task_Users" Association="Self.FK_Task_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Task" EntitySet="Task" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Managers" Association="Self.FK_Users_Managers">
+            <End Role="Managers" EntitySet="Managers" />
+            <End Role="Users" EntitySet="Users" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -62,6 +122,17 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ProjectsDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Manager">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="15" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Projects" Relationship="Self.FK_Projects_Managers" FromRole="Managers" ToRole="Projects" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_Users_Managers" FromRole="Managers" ToRole="Users" />
+        </EntityType>
         <EntityType Name="Project">
           <Key>
             <PropertyRef Name="id" />
@@ -70,6 +141,8 @@
           <Property Name="project_name" Type="String" MaxLength="100" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="start_date" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="end_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="manager_id" Type="Int32" />
+          <NavigationProperty Name="Manager" Relationship="Self.FK_Projects_Managers" FromRole="Projects" ToRole="Managers" />
           <NavigationProperty Name="Tasks" Relationship="Self.FK_Task_Projects1" FromRole="Projects" ToRole="Task" />
         </EntityType>
         <EntityType Name="Task">
@@ -83,7 +156,9 @@
           <Property Name="createdAt" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="dueDate" Type="DateTime" Precision="0" />
           <Property Name="project_id" Type="Int32" Nullable="false" />
+          <Property Name="user_id" Type="Int32" />
           <NavigationProperty Name="Project" Relationship="Self.FK_Task_Projects1" FromRole="Task" ToRole="Projects" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Task_Users" FromRole="Task" ToRole="Users" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -93,8 +168,34 @@
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="Email" Type="String" MaxLength="100" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="Password" Type="String" MaxLength="15" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="Role" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Manager_id" Type="Int32" />
+          <NavigationProperty Name="Manager" Relationship="Self.FK_Users_Managers" FromRole="Users" ToRole="Managers" />
+          <NavigationProperty Name="Tasks" Relationship="Self.FK_Task_Users" FromRole="Users" ToRole="Task" />
         </EntityType>
+        <Association Name="FK_Projects_Managers">
+          <End Role="Managers" Type="Self.Manager" Multiplicity="0..1" />
+          <End Role="Projects" Type="Self.Project" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Managers">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Projects">
+              <PropertyRef Name="manager_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Managers">
+          <End Role="Managers" Type="Self.Manager" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Managers">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="Manager_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Task_Projects1">
           <End Role="Projects" Type="Self.Project" Multiplicity="1" />
           <End Role="Task" Type="Self.Task" Multiplicity="*" />
@@ -107,12 +208,37 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="ProjectsDbEntities1" annotation:LazyLoadingEnabled="true">
+        <Association Name="FK_Task_Users">
+          <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Task" Type="Self.Task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="User_id" />
+            </Principal>
+            <Dependent Role="Task">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ProjectsDbEntities2" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Managers" EntityType="Self.Manager" />
           <EntitySet Name="Projects" EntityType="Self.Project" />
           <EntitySet Name="Tasks" EntityType="Self.Task" />
           <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK_Projects_Managers" Association="Self.FK_Projects_Managers">
+            <End Role="Managers" EntitySet="Managers" />
+            <End Role="Projects" EntitySet="Projects" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Managers" Association="Self.FK_Users_Managers">
+            <End Role="Managers" EntitySet="Managers" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
           <AssociationSet Name="FK_Task_Projects1" Association="Self.FK_Task_Projects1">
             <End Role="Projects" EntitySet="Projects" />
+            <End Role="Task" EntitySet="Tasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Task_Users" Association="Self.FK_Task_Users">
+            <End Role="Users" EntitySet="Users" />
             <End Role="Task" EntitySet="Tasks" />
           </AssociationSet>
         </EntityContainer>
@@ -121,7 +247,17 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="ProjectsDbModelStoreContainer" CdmEntityContainer="ProjectsDbEntities1">
+        <EntityContainerMapping StorageEntityContainer="ProjectsDbModelStoreContainer" CdmEntityContainer="ProjectsDbEntities2">
+          <EntitySetMapping Name="Managers">
+            <EntityTypeMapping TypeName="ProjectsDbModel.Manager">
+              <MappingFragment StoreEntitySet="Managers">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Projects">
             <EntityTypeMapping TypeName="ProjectsDbModel.Project">
               <MappingFragment StoreEntitySet="Projects">
@@ -129,6 +265,7 @@
                 <ScalarProperty Name="project_name" ColumnName="project_name" />
                 <ScalarProperty Name="start_date" ColumnName="start_date" />
                 <ScalarProperty Name="end_date" ColumnName="end_date" />
+                <ScalarProperty Name="manager_id" ColumnName="manager_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -142,6 +279,7 @@
                 <ScalarProperty Name="createdAt" ColumnName="createdAt" />
                 <ScalarProperty Name="dueDate" ColumnName="dueDate" />
                 <ScalarProperty Name="project_id" ColumnName="project_id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -152,7 +290,7 @@
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="Manager_id" ColumnName="Manager_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
