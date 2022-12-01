@@ -1,0 +1,73 @@
+﻿@model List<Project_Management_System.Models.Task>
+
+@{
+    ViewBag.Title = "DetailsbyProject";
+}
+
+<h2>Project details</h2>
+
+<div>
+    <h4>Tasks</h4>
+    <hr />
+    <p>
+        @Html.ActionLink("Create New Task", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                Title
+            </th>
+            <th>
+                Description
+            </th>
+            <th>
+                Status
+            </th>
+            <th>
+                CreatedAt
+            </th>
+            <th>
+                Due date
+            </th>
+            @*<th>
+                Project
+            </th>*@
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.status)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.createdAt)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.dueDate)
+                </td>
+                @*<td>
+                    @Html.DisplayFor(modelItem => item.Project.project_name)
+                </td>*@
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.id })
+                </td>
+            </tr>
+        }
+
+    </table>
+
+</div>
+<p>
+   
+    @Html.ActionLink("Back to List", "Index","Projects",null,null)
+</p>
