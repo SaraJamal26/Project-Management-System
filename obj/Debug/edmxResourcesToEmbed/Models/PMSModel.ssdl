@@ -17,7 +17,7 @@
     <Property Name="project_name" Type="nchar" MaxLength="100" Nullable="false" />
     <Property Name="start_date" Type="date" Nullable="false" />
     <Property Name="end_date" Type="date" Nullable="false" />
-    <Property Name="manager_id" Type="int" />
+    <Property Name="manager_id" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Task">
     <Key>
@@ -42,8 +42,8 @@
     <Property Name="Password" Type="nchar" MaxLength="15" Nullable="false" />
     <Property Name="Manager_id" Type="int" />
   </EntityType>
-  <Association Name="FK_Projects_Managers">
-    <End Role="Managers" Type="Self.Managers" Multiplicity="0..1" />
+  <Association Name="FK_Projects_Managers1">
+    <End Role="Managers" Type="Self.Managers" Multiplicity="1" />
     <End Role="Projects" Type="Self.Projects" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Managers">
@@ -95,7 +95,7 @@
     <EntitySet Name="Projects" EntityType="Self.Projects" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Task" EntityType="Self.Task" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
-    <AssociationSet Name="FK_Projects_Managers" Association="Self.FK_Projects_Managers">
+    <AssociationSet Name="FK_Projects_Managers1" Association="Self.FK_Projects_Managers1">
       <End Role="Managers" EntitySet="Managers" />
       <End Role="Projects" EntitySet="Projects" />
     </AssociationSet>

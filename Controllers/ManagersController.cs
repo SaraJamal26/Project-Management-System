@@ -10,109 +10,107 @@ using Project_Management_System.Models;
 
 namespace Project_Management_System.Controllers
 {
-    [Authorize]
-    public class ProjectsController : Controller
+    public class ManagersController : Controller
     {
         private ProjectsDbEntities2 db = new ProjectsDbEntities2();
 
-        // GET: Projects
+        // GET: Managers
         public ActionResult Index()
         {
-            return View(db.Projects.ToList());
+            return View(db.Managers.ToList());
         }
 
-        // GET: Projects/Details/5
+        // GET: Managers/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Project project = db.Projects.Find(id);
-            if (project == null)
+            Manager manager = db.Managers.Find(id);
+            if (manager == null)
             {
                 return HttpNotFound();
             }
-            return View(project);
+            return View(manager);
         }
 
-        // GET: Projects/Create
+        // GET: Managers/Create
         public ActionResult Create()
         {
-            ViewBag.manager_id = new SelectList(db.Managers, "id", "Name");
             return View();
         }
 
-        // POST: Projects/Create
+        // POST: Managers/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "id,project_name,start_date,end_date,manager_id")] Project project)
+        public ActionResult Create([Bind(Include = "id,Name,Email,Password")] Manager manager)
         {
             if (ModelState.IsValid)
             {
-                db.Projects.Add(project);
+                db.Managers.Add(manager);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(project);
+            return View(manager);
         }
 
-        // GET: Projects/Edit/5
+        // GET: Managers/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Project project = db.Projects.Find(id);
-            if (project == null)
+            Manager manager = db.Managers.Find(id);
+            if (manager == null)
             {
                 return HttpNotFound();
             }
-            return View(project);
+            return View(manager);
         }
 
-        // POST: Projects/Edit/5
+        // POST: Managers/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,project_name,start_date,end_date,manager_id")] Project project)
+        public ActionResult Edit([Bind(Include = "id,Name,Email,Password")] Manager manager)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(project).State = EntityState.Modified;
+                db.Entry(manager).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(project);
+            return View(manager);
         }
 
-        // GET: Projects/Delete/5
+        // GET: Managers/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Project project = db.Projects.Find(id);
-            if (project == null)
+            Manager manager = db.Managers.Find(id);
+            if (manager == null)
             {
                 return HttpNotFound();
             }
-            return View(project);
+            return View(manager);
         }
 
-        // POST: Projects/Delete/5
+        // POST: Managers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Project project = db.Projects.Find(id);
-            db.Projects.Remove(project);
+            Manager manager = db.Managers.Find(id);
+            db.Managers.Remove(manager);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

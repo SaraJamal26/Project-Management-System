@@ -10,6 +10,7 @@ using Project_Management_System.Models;
 
 namespace Project_Management_System.Controllers
 {
+    [Authorize]
     public class TasksController : Controller
     {
         private ProjectsDbEntities2 db = new ProjectsDbEntities2();

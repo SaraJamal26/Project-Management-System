@@ -8,7 +8,7 @@
     <Property Name="Name" Type="String" MaxLength="100" FixedLength="true" Unicode="true" Nullable="false" />
     <Property Name="Email" Type="String" MaxLength="100" FixedLength="true" Unicode="true" Nullable="false" />
     <Property Name="Password" Type="String" MaxLength="15" FixedLength="true" Unicode="true" Nullable="false" />
-    <NavigationProperty Name="Projects" Relationship="Self.FK_Projects_Managers" FromRole="Managers" ToRole="Projects" />
+    <NavigationProperty Name="Projects" Relationship="Self.FK_Projects_Managers1" FromRole="Managers" ToRole="Projects" />
     <NavigationProperty Name="Users" Relationship="Self.FK_Users_Managers" FromRole="Managers" ToRole="Users" />
   </EntityType>
   <EntityType Name="Project">
@@ -19,8 +19,8 @@
     <Property Name="project_name" Type="String" MaxLength="100" FixedLength="true" Unicode="true" Nullable="false" />
     <Property Name="start_date" Type="DateTime" Nullable="false" Precision="0" />
     <Property Name="end_date" Type="DateTime" Nullable="false" Precision="0" />
-    <Property Name="manager_id" Type="Int32" />
-    <NavigationProperty Name="Manager" Relationship="Self.FK_Projects_Managers" FromRole="Projects" ToRole="Managers" />
+    <Property Name="manager_id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Manager" Relationship="Self.FK_Projects_Managers1" FromRole="Projects" ToRole="Managers" />
     <NavigationProperty Name="Tasks" Relationship="Self.FK_Task_Projects1" FromRole="Projects" ToRole="Task" />
   </EntityType>
   <EntityType Name="Task">
@@ -50,8 +50,8 @@
     <NavigationProperty Name="Manager" Relationship="Self.FK_Users_Managers" FromRole="Users" ToRole="Managers" />
     <NavigationProperty Name="Tasks" Relationship="Self.FK_Task_Users" FromRole="Users" ToRole="Task" />
   </EntityType>
-  <Association Name="FK_Projects_Managers">
-    <End Role="Managers" Type="Self.Manager" Multiplicity="0..1" />
+  <Association Name="FK_Projects_Managers1">
+    <End Role="Managers" Type="Self.Manager" Multiplicity="1" />
     <End Role="Projects" Type="Self.Project" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Managers">
@@ -103,7 +103,7 @@
     <EntitySet Name="Projects" EntityType="Self.Project" />
     <EntitySet Name="Tasks" EntityType="Self.Task" />
     <EntitySet Name="Users" EntityType="Self.User" />
-    <AssociationSet Name="FK_Projects_Managers" Association="Self.FK_Projects_Managers">
+    <AssociationSet Name="FK_Projects_Managers1" Association="Self.FK_Projects_Managers1">
       <End Role="Managers" EntitySet="Managers" />
       <End Role="Projects" EntitySet="Projects" />
     </AssociationSet>
