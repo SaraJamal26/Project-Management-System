@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -20,60 +21,58 @@ namespace Project_Management_System.Controllers
 
         public ActionResult Login()
         {
-            ViewBag.manager_id = new SelectList(db.Managers, "id", "Name");
+            //ViewBag.manager_id = new SelectList(db.Managers, "id", "Name");
             return View();
         }
 
         [HttpPost]
-        public ActionResult Login(Models.User model)
+        public ActionResult Login(Models.Membership model)
         {
+      
+
             using (var context = new ProjectsDbEntities2())
             {
-                bool isValid = context.Users.Any(x => x.Email == model.Email
-                && x.Password == model.Password);
+                bool isValid = context.Logins.Any(x => x.username == model.Username
+                && x.password == model.Password);
 
-                if (isValid)
+                 if(isValid)
                 {
-                    FormsAuthentication.SetAuthCookie(model.Email, false);
-                    return RedirectToAction("Index", "Projects");
+                    FormsAuthentication.SetAuthCookie(model.Username, false);
+                    return RedirectToAction("Index","Home");
                 }
-                ModelState.AddModelError("", "Invalid email or password");
-                ViewBag.manager_id = new SelectList(db.Managers, "id", "Name");
+                ModelState.AddModelError("", "Invalid username or password");
+               
+                   
                 return View();
             }
         }
 
-        public ActionResult LoginManager()
+        public ActionResult LoginManager(Models.Membership model)
         {
-            ViewBag.manager_id = new SelectList(db.Managers, "id", "Name");
-            return View();
-        }
 
-        [HttpPost]
-        public ActionResult LoginManager(Models.Manager model)
-        {
+
             using (var context = new ProjectsDbEntities2())
             {
-                bool isValid = context.Managers.Any(x => x.Email == model.Email
-                && x.Password == model.Password);
+                bool isValid = context.Logins.Any(x => x.username == model.Username
+                && x.password == model.Password);
 
                 if (isValid)
                 {
-                    FormsAuthentication.SetAuthCookie(model.Email, false);
-                    return RedirectToAction("Index", "Projects");
+                    FormsAuthentication.SetAuthCookie(model.Username, false);
+                    return RedirectToAction("Index", "Home");
                 }
-                ModelState.AddModelError("", "Invalid email or password");
-                ViewBag.manager_id = new SelectList(db.Managers, "id", "Name");
+                ModelState.AddModelError("", "Invalid username or password");
+
+
                 return View();
             }
-
-
-
         }
+
+
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
-            return RedirectToAction("Index", "Projects");
+            return RedirectToAction("Login");
         }
     }
 

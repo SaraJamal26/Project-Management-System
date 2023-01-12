@@ -56,6 +56,17 @@ namespace Project_Management_System.Controllers
         {
             ViewBag.project_id = new SelectList(db.Projects, "id", "project_name");
             ViewBag.user_id = new SelectList(db.Users, "User_id", "Name");
+            List<SelectListItem> items = new List<SelectListItem>();
+
+            items.Add(new SelectListItem { Text = "Pending", Value = "Pending", Selected = true });
+
+            items.Add(new SelectListItem { Text = "In Progress", Value = "In Progress" });
+
+            items.Add(new SelectListItem { Text = "Completed", Value = "Completed" });
+
+            ViewBag.status = items;
+            
+           // ViewBag.status = 
             return View();
         }
 

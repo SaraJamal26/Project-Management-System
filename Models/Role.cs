@@ -12,18 +12,12 @@ namespace Project_Management_System.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Task
+    public partial class Role
     {
         public int id { get; set; }
-        public string title { get; set; }
-        public string description { get; set; }
-        public string status { get; set; }
-        public System.DateTime createdAt { get; set; }
-        public Nullable<System.DateTime> dueDate { get; set; }
-        public int project_id { get; set; }
-        public int user_id { get; set; }
+        public int Login_id { get; set; }
+        public string RoleName { get; set; }
     
-        public virtual Project Project { get; set; }
-        public virtual User User { get; set; }
+        public virtual Login Login { get; set; }
     }
 }

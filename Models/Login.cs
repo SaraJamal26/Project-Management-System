@@ -11,24 +11,29 @@ namespace Project_Management_System.Models
 {
     using System;
     using System.Collections.Generic;
-    
-    public partial class Manager
+    using System.ComponentModel.DataAnnotations;
+
+
+    public partial class Login
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Manager()
+        public Login()
         {
-            this.Projects = new HashSet<Project>();
+            this.Roles = new HashSet<Role>();
+            this.Managers = new HashSet<Manager>();
             this.Users = new HashSet<User>();
         }
     
         public int id { get; set; }
-        public string Name { get; set; }
-        public string Email { get; set; }
-        public Nullable<int> login_id { get; set; }
+        public string username { get; set; }
+
+        [DataType(DataType.Password)]
+        public string password { get; set; }
     
-        public virtual Login Login { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Project> Projects { get; set; }
+        public virtual ICollection<Role> Roles { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Manager> Managers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<User> Users { get; set; }
     }

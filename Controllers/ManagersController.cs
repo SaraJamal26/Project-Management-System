@@ -10,6 +10,7 @@ using Project_Management_System.Models;
 
 namespace Project_Management_System.Controllers
 {
+    [Authorize]
     public class ManagersController : Controller
     {
         private ProjectsDbEntities2 db = new ProjectsDbEntities2();
@@ -78,7 +79,7 @@ namespace Project_Management_System.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "id,Name,Email,Password")] Manager manager)
+        public ActionResult Edit([Bind(Include = "id,Name,Email")] Manager manager)
         {
             if (ModelState.IsValid)
             {

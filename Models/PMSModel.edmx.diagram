@@ -4,11 +4,16 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="cecf846d0f4f45fb976499c87e95ac1d" Name="Diagram1">
-        <EntityTypeShape EntityType="ProjectsDbModel.Manager" Width="1.5" PointX="0.75" PointY="3.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectsDbModel.Project" Width="1.5" PointX="3" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectsDbModel.Task" Width="1.5" PointX="5.25" PointY="2.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="ProjectsDbModel.User" Width="1.5" PointX="3" PointY="4.5" IsExpanded="true" />
+      <Diagram DiagramId="b77c84b0945b4a9bb4b39616bd32148d" Name="Diagram1">
+        <EntityTypeShape EntityType="ProjectsDbModel.Login" Width="1.5" PointX="0.75" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectsDbModel.Manager" Width="1.5" PointX="3" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectsDbModel.Project" Width="1.5" PointX="5.25" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectsDbModel.Role" Width="1.5" PointX="3" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectsDbModel.Task" Width="1.5" PointX="7.5" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectsDbModel.User" Width="1.5" PointX="5.25" PointY="6.75" IsExpanded="true" />
+        <AssociationConnector Association="ProjectsDbModel.FK_Login_Roles" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectsDbModel.FK_Managers_Login" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectsDbModel.FK_Users_Login" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectsDbModel.FK_Projects_Managers1" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectsDbModel.FK_Users_Managers" ManuallyRouted="false" />
         <AssociationConnector Association="ProjectsDbModel.FK_Task_Projects1" ManuallyRouted="false" />

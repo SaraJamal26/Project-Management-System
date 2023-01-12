@@ -25,8 +25,10 @@ namespace Project_Management_System.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Login> Logins { get; set; }
         public virtual DbSet<Manager> Managers { get; set; }
         public virtual DbSet<Project> Projects { get; set; }
+        public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<Task> Tasks { get; set; }
         public virtual DbSet<User> Users { get; set; }
     }

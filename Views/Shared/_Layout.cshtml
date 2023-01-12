@@ -8,7 +8,7 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-inverse navbar-fixed-top navbar-light" style="background-color: steelblue !important">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" title="more options">
@@ -16,36 +16,47 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Project Management System", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+               
+                @Html.ActionLink("Project Management System", "Index", "Home", new { area = "" }, new { @class = "navbar-brand", @style = "color: white; !important" })
+                
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Projects", "Index", "Projects")</li>
-                    <li>@Html.ActionLink("Managers", "Index", "Managers")</li>
-                </ul>
-                <ul class="nav navbar-nav">
+                <ul class="nav navbar-nav" style="color: white !important">
+                    <li>@Html.ActionLink("Home", "Index", "Home", null, htmlAttributes: new { @style = "color: white; !important" })</li>
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <a>Hi, @User.Identity.Name</a>
-                        <li>@Html.ActionLink("Logout", "Logout", "Login")</li>
-                    }
-                    else
-                    {
-                        <li>@Html.ActionLink("Login as User", "Login", "Login")</li>
-                        <li>@Html.ActionLink("Login as Manager", "LoginManager", "Login")</li>
+                        <li>@Html.ActionLink("Projects", "Index", "Projects", null, htmlAttributes: new { @style = "color: white; !important" })</li>
+                        <li>@Html.ActionLink("Tasks", "Index", "Tasks", null, htmlAttributes: new { @style = "color: white; !important" })</li>
+                        <li>@Html.ActionLink("Managers", "Index", "Managers", null, htmlAttributes: new { @style = "color: white; !important" })</li>
+                        <li>@Html.ActionLink("Team", "Index", "Users", null, htmlAttributes: new { @style = "color: white; !important" })</li>
+                        <li>@Html.ActionLink("Our branches", "ProjectList", "Users", null, htmlAttributes: new { @style = "color: white; !important" })</li>
 
                     }
                 </ul>
-            </div>
+               
+                <ul class="nav navbar-nav">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li style="color: white; margin-left:10vw; padding-top: 6px !important"> <h4> Hi, @User.Identity.Name!</h4>  </li>
+                        <li>@Html.ActionLink("Logout", "Logout", "Login", null, htmlAttributes: new { @style = "color: white; !important; margin-left: 4vw;" })</li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Login as User", "Login", "Login", null, htmlAttributes: new { @style = "color: white; !important; margin-left: 48vw" })</li>
+                        @*<li>@Html.ActionLink("Login as Manager", "LoginManager", "Login", null, htmlAttributes: new { @style = "color: white; !important; " })</li>*@
+                        @*<li>@Html.ActionLink("Login as Manager", "LoginManager", "Login")</li>*@
+
+                    }
+                </ul>
+                </div>
         </div>
     </div>
     <div class="container body-content">
         @RenderBody()
         <hr />
-        <footer>
+        @*<footer>
             <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
+        </footer>*@
     </div>
 
     @Scripts.Render("~/bundles/jquery")

@@ -23,9 +23,10 @@ namespace Project_Management_System.Models
         public int User_id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
-        public string Password { get; set; }
-        public Nullable<int> Manager_id { get; set; }
+        public int Manager_id { get; set; }
+        public Nullable<int> login_id { get; set; }
     
+        public virtual Login Login { get; set; }
         public virtual Manager Manager { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Task> Tasks { get; set; }

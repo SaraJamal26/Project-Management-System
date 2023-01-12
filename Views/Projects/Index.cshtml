@@ -7,7 +7,12 @@
 <h2>Projects</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @if (User.Identity.IsAuthenticated)
+    {
+       
+    @Html.ActionLink("Create New Project", "Create")
+        
+    }
 </p>
 <table class="table">
     <tr>
@@ -21,7 +26,7 @@
             End date
         </th>
         <th>
-            Manager ID
+            Manager 
         </th>
         <th>
             Actions
@@ -40,12 +45,14 @@
             @Html.DisplayFor(modelItem => item.end_date)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.manager_id)
+            @Html.DisplayFor(modelItem => item.Manager.Name)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.id }) |
-            @Html.ActionLink("Details", "DetailsbyProject", "Tasks", new { id=item.id }, null) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.id })
+
+            @*@Html.ActionLink("My role", "ShowUserRoles", new { id = item.id })  |*@
+            @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+            @Html.ActionLink("Details", "DetailsbyProject", "Tasks", new { id = item.id }, null) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.id })
         </td>
     </tr>
 }

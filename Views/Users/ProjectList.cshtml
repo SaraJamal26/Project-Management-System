@@ -1,0 +1,37 @@
+﻿@model System.Data.DataTable
+@{
+    ViewBag.Title = "ProjectList";
+}
+
+<br /><br />
+
+      <center>
+          <h3 style="color: steelblue">Our branches</h3>
+          <table border="1" cellpadding="15">
+              <thead>
+                  <tr>
+                      @foreach (System.Data.DataColumn col in Model.Columns)
+                      {
+                          <th style="background-color: steelblue; color: white; text-align: center">@col.Caption</th>
+                      }
+                  </tr>
+              </thead>
+              <tbody>
+                  @foreach (System.Data.DataRow row in Model.Rows)
+                  {
+                      <tr>
+                          @foreach (var cell in row.ItemArray)
+                          {
+                              <td style="text-align: center">@cell.ToString()</td>
+                          }
+                      </tr>
+                  }
+              </tbody>
+          </table>
+          <br />
+          <h5>
+              <a href="https://contactuspms.azurewebsites.net/api/About?code=ajadDoCoDnw3te5A_EdGO8lOeoXY9apErqqKStrIIr7gAzFuxlyDNw==">Contact owners</a>
+          </h5>
+          </center>
+
+
